@@ -9,77 +9,77 @@ categories:
  - apps/others
 
 description:
-  text: /texts/description.md
-  short: Install wkhtmltopdf/wkhtmltoimage
+ text: /texts/description.md
+ short: Install wkhtmltopdf/wkhtmltoimage
 
 targetNodes:
-  nodeGroup:
-  - cp
+ nodeGroup:
+  –- cp
 
 menu:
-  - caption: Install wkhtmltox
-    loadingText: Installing wkhtmltox...
-    action: installwk
-  - caption: Uninstall wkhtmltox
-    loadingText: Uninstalling wkhtmltox...
-    confirmText: Are you sure you wish to uninstall wkhtmltox?
-    action: uninstallwk
+ - caption: Install wkhtmltox
+   loadingText: Installing wkhtmltox...
+   action: installwk
+ - caption: Uninstall wkhtmltox
+   loadingText: Uninstalling wkhtmltox...
+   confirmText: Are you sure you wish to uninstall wkhtmltox?
+   action: uninstallwk
 
 buttons:
-  - caption: Check version
-    loadingText: Checking..
-    action: checkwk
+ - caption: Check version
+   loadingText: Checking..
+   action: checkwk
 
 onAfterRedeployContainer:
-  installwk
+ installwk
 
 onInstall:
-  installwk
+ installwk
 
 onUninstall:
-  uninstallwk
+ uninstallwk
 
 actions:
-  installwk:
-    - cmd [${targetNodes.nodeGroup}]:
-	- yum install -q -y epel-releas
-	- yum install -q -y zlib fontconfig freetype libX11 libXext libXrender xorg-x11-fonts-Type1 xorg-x11-fonts-75dpi
-        - wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox-0.12.6-1.centos7.x86_64.rpm -O /root/wkhtml.rpm
-        - rpm -i /root/wkhtml.rpm
-      sayYes: true
-      user: root
-    - if (response.out.indexOf("Issue") !== -1):
-        message:  ${response.out}
-        script: |
-          return {'result': 2308, 'message': message.replace(/\n/g, '  \n')}
+ installwk:
+  - cmd [${targetNodes.nodeGroup}]:
+     - yum install -q -y epel-releas
+     - yum install -q -y zlib fontconfig freetype libX11 libXext libXrender xorg-x11-fonts-Type1 xorg-x11-fonts-75dpi
+     - wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox-0.12.6-1.centos7.x86_64.rpm -O /root/wkhtml.rpm
+     - rpm -i /root/wkhtml.rpm
+    sayYes: true
+    user: root
+  - if (response.out.indexOf("Issue") !== -1):
+     message: ${response.out}
+     script: |
+      return {'result': 2308, 'message': message.replace(/\n/g, '  \n')}
 
-  uninstallwk:
-    - cmd [${targetNodes.nodeGroup}]:
-        - rpm -e wkhtmltox-0.12.6-1.centos7.x86_64
-      user: root
-    - message: ${response.out}
-      script: |
-        return {'result': 2308, 'message': message.replace(/\n/g, '  \n')}
+ uninstallwk:
+  - cmd–– [${targetNodes.nodeGroup}]:
+     - rpm -e wkhtmltox-0.12.6-1.centos7.x86_64
+    user: root
+  - message: ${response.out}
+    script: |
+     return {'result': 2308, 'message': message.replace(/\n/g, '  \n')}
 
-  checkwk:
-    - cmd [${targetNodes.nodeGroup}]:
-        - wkhtmltopdf -V
-      user: root
-    - message: ${response.out}
-      script: |
-        return {'result': 2307, 'message': message.replace(/\n/g, '  \n')}
+ checkwk:
+  - cmd [${targetNodes.nodeGroup}]:
+     - wkhtmltopdf -V
+    user: root
+  - message: ${response.out}
+    script: |
+     return {'result': 2307, 'message': message.replace(/\n/g, '  \n')}
 
 responses:
-  2307:
-    type: info
-    message: Custom Success message!
+ 2307:
+  type: info
+  message: Custom Success message!
 
-  2308:
-    type: success
-    message: Custom Success message!
+ 2308:
+  type: success
+  message: Custom Success message!
 
-  2309:
-    type: error
-    message: Custom Success message!
+ 2309:
+  type: error
+  message: Custom Success message!
 
 success: /messages/success.md
