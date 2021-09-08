@@ -1,0 +1,1 @@
+Install the wkhtmltox suite

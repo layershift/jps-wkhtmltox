@@ -1,0 +1,78 @@
+type: update
+name: 'wkhtmltox'
+id: 'wkhtmltox'
+homepage: https://github.com/layershift/jps-wkhtmltox
+baseUrl: https://raw.githubusercontent.com/layershift/jps-wkhtmltox/main
+logo: /images/wkhtmltox.png?_r=${fn.random}
+
+categories:
+ - apps/others
+
+description:
+ text: /messages/description.md
+ short: wkhtmltopdf/wkhtmltoimage utilitary (0.12.6)
+
+targetNodes:
+ nodeGroup:
+  - cp
+
+buttons:
+ - caption: Check version
+   loadingText: Checking..
+   action: checkwk
+
+onAfterRedeployContainer:
+ installwk
+
+onAfterCloneNodes:
+ installwk
+
+onInstall:
+ installwk
+
+onUninstall:
+ uninstallwk
+
+
+
+actions:
+ installwk:
+  - cmd [${targetNodes.nodeGroup}]:
+     - yum install -q -y epel-releas
+     - yum install -q -y zlib fontconfig freetype libX11 libXext libXrender xorg-x11-fonts-Type1 xorg-x11-fonts-75dpi
+     - wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox-0.12.6-1.centos7.x86_64.rpm -O /root/wkhtml.rpm
+     - rpm -i /root/wkhtml.rpm
+    sayYes: true
+    user: root
+  - if (response.out.indexOf("Issue") !== -1):
+     message: ${response.out}
+     script: |
+      return {'result': 2308, 'message': message.replace(/\n/g, '  \n')}
+
+ uninstallwk:
+  - cmd [${targetNodes.nodeGroup}]:
+     - rpm -e wkhtmltox-0.12.6-1.centos7.x86_64
+    user: root
+
+ checkwk:
+  - cmd [${targetNodes.nodeGroup}]:
+     - wkhtmltopdf -V
+    user: root
+  - message: ${response.out}
+    script: |
+     return {'result': 2307, 'message': message.replace(/\n/g, '  \n')}
+
+responses:
+ 2307:
+  type: info
+  message: Custom Success message!
+
+ 2308:
+  type: success
+  message: Custom Success message!
+
+ 2309:
+  type: error
+  message: Custom Success message!
+
+success: /messages/success.md
