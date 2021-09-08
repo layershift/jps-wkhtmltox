@@ -2,7 +2,7 @@ type: update
 name: 'wkhtmltox'
 id: 'wkhtmltox'
 homepage: https://github.com/layershift/jps-wkhtmltox
-baseUrl: https://raw.githubusercontent.com/layershift/jps-wkhtmltox/develop
+baseUrl: https://raw.githubusercontent.com/layershift/jps-wkhtmltox/main
 logo: /images/wkhtmltox.png?_r=${fn.random}
 
 categories:
@@ -10,7 +10,7 @@ categories:
 
 description:
  text: /messages/description.md
- short: wkhtmltopdf/wkhtmltoimage utilitary
+ short: wkhtmltopdf/wkhtmltoimage utilitary (0.12.6)
 
 targetNodes:
  nodeGroup:
@@ -24,11 +24,16 @@ buttons:
 onAfterRedeployContainer:
  installwk
 
+onAfterCloneNodes:
+ installwk
+
 onInstall:
  installwk
 
 onUninstall:
  uninstallwk
+
+
 
 actions:
  installwk:
