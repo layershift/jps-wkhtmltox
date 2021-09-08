@@ -9,12 +9,12 @@ categories:
  - apps/others
 
 description:
- text: /texts/description.md
+ text: /messages/description.md
  short: Install wkhtmltopdf/wkhtmltoimage
 
 targetNodes:
  nodeGroup:
-  –- cp
+  - cp
 
 menu:
  - caption: Install wkhtmltox
