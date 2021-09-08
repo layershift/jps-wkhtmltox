@@ -10,20 +10,11 @@ categories:
 
 description:
  text: /messages/description.md
- short: Install wkhtmltopdf/wkhtmltoimage
+ short: wkhtmltopdf/wkhtmltoimage utilitary
 
 targetNodes:
  nodeGroup:
   - cp
-
-menu:
- - caption: Install wkhtmltox
-   loadingText: Installing wkhtmltox...
-   action: installwk
- - caption: Uninstall wkhtmltox
-   loadingText: Uninstalling wkhtmltox...
-   confirmText: Are you sure you wish to uninstall wkhtmltox?
-   action: uninstallwk
 
 buttons:
  - caption: Check version
@@ -54,7 +45,7 @@ actions:
       return {'result': 2308, 'message': message.replace(/\n/g, '  \n')}
 
  uninstallwk:
-  - cmd–– [${targetNodes.nodeGroup}]:
+  - cmd [${targetNodes.nodeGroup}]:
      - rpm -e wkhtmltox-0.12.6-1.centos7.x86_64
     user: root
   - message: ${response.out}
